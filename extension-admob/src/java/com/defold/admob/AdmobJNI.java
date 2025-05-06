@@ -9,6 +9,7 @@ import android.view.Gravity;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.view.View;
+import android.view.KeyEvent;
 import android.view.ViewGroup.LayoutParams;
 import android.view.ViewGroup.MarginLayoutParams;
 import android.content.Context;
