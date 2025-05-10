@@ -9,7 +9,6 @@ import android.view.Gravity;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.view.View;
-import android.view.KeyEvent;
 import android.view.ViewGroup.LayoutParams;
 import android.view.ViewGroup.MarginLayoutParams;
 import android.content.Context;
@@ -438,10 +437,6 @@ public class AdmobJNI implements LifecycleObserver {
                         // Log.d(TAG, "The ad was closed.");
                         mInterstitialAd = null;
                         sendSimpleMessage(MSG_INTERSTITIAL, EVENT_CLOSED);
-
-                        // Restore normal back key behavior
-                        View decor = activity.getWindow().getDecorView();
-                        decor.setOnKeyListener(null);
                       }
 
                       @Override
@@ -458,22 +453,8 @@ public class AdmobJNI implements LifecycleObserver {
                         // Make sure to set your reference to null so you don't
                         // show it a second time.
                         // Log.d(TAG, "The ad was shown.");
-                        View decor = activity.getWindow().getDecorView();
-                        decor.setFocusableInTouchMode(true);
-                        decor.requestFocus();
-                        decor.setOnKeyListener(new View.OnKeyListener() {
-                            @Override
-                            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                                if (keyCode == KeyEvent.KEYCODE_BACK) {
-                                    // Block back button
-                                    return true;
-                                }
-                                return false;
-                            }
-                        });
-
                         mInterstitialAd = null;
-                        // sendSimpleMessage(MSG_INTERSTITIAL, EVENT_OPENING);
+                        sendSimpleMessage(MSG_INTERSTITIAL, EVENT_OPENING);
                       }
 
                       @Override
