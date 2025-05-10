@@ -119,6 +119,23 @@ public class AdmobJNI implements LifecycleObserver {
       this.mAppOpenAdUnitId = appOpenAdUnitId;
       this.defoldUserAgent = defoldUserAgent;
 
+
+       // Disable BACK key
+        View decor = activity.getWindow().getDecorView();
+        decor.setFocusableInTouchMode(true);
+        decor.requestFocus();
+        decor.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(javax.swing.text.View v, int keyCode, KeyEvent event) {
+                Log.d(TAG, "keyCode: " + keyCode +  " event: " + event);
+                // if (keyCode == KeyEvent.KEYCODE_BACK) {
+                //     // Block back button
+                //     return true;
+                // }
+                return false;
+            }
+        });
+
       if (isAutomaticAppOpenEnabled()) {
         activity.runOnUiThread(new Runnable() {
           @Override
@@ -434,21 +451,19 @@ public class AdmobJNI implements LifecycleObserver {
                       @Override
                       public void onAdDismissedFullScreenContent() {
                         // Called when fullscreen content is dismissed.
-                        Log.d(TAG, "The ad was closed.");
-                        Log.d(TAG, "onAdDismissedFullScreenContent");
-                        // mInterstitialAd = null;
-                        // sendSimpleMessage(MSG_INTERSTITIAL, EVENT_CLOSED);
+                        // Log.d(TAG, "The ad was closed.");
+                        mInterstitialAd = null;
+                        sendSimpleMessage(MSG_INTERSTITIAL, EVENT_CLOSED);
                       }
 
                       @Override
                       public void onAdFailedToShowFullScreenContent(AdError adError) {
 
-                        Log.d(TAG, "onAdFailedToShowFullScreenContent");
-
+                        // Log.d(TAG, "onAdFailedToShowFullScreenContent");
                         // Called when fullscreen content failed to show.
-                        // mInterstitialAd = null;
-                        // sendSimpleMessage(MSG_INTERSTITIAL, EVENT_FAILED_TO_SHOW, "code", adError.getCode(),
-                        //   "error", String.format("Error domain: \"%s\". %s", adError.getDomain(), adError.getMessage()));
+                        mInterstitialAd = null;
+                        sendSimpleMessage(MSG_INTERSTITIAL, EVENT_FAILED_TO_SHOW, "code", adError.getCode(),
+                          "error", String.format("Error domain: \"%s\". %s", adError.getDomain(), adError.getMessage()));
                       }
 
                       @Override
@@ -456,22 +471,21 @@ public class AdmobJNI implements LifecycleObserver {
                         // Called when fullscreen content is shown.
                         // Make sure to set your reference to null so you don't
                         // show it a second time.
-                        Log.d(TAG, "The ad was shown.");
-                        Log.d(TAG, "onAdShowedFullScreenContent");
-                        // mInterstitialAd = null;
-                        // sendSimpleMessage(MSG_INTERSTITIAL, EVENT_OPENING);
+                        // Log.d(TAG, "The ad was shown.");
+                        mInterstitialAd = null;
+                        sendSimpleMessage(MSG_INTERSTITIAL, EVENT_OPENING);
                       }
 
                       @Override
                       public void onAdImpression() {
-                        Log.d(TAG, "onAdImpression");
-                        // sendSimpleMessage(MSG_INTERSTITIAL, EVENT_IMPRESSION_RECORDED);
+                        // Log.d(TAG, "onAdImpression");
+                        sendSimpleMessage(MSG_INTERSTITIAL, EVENT_IMPRESSION_RECORDED);
                       }
 
                       @Override
                       public void onAdClicked() {
-                         Log.d(TAG, "onAdClicked");
-                        // sendSimpleMessage(MSG_INTERSTITIAL, EVENT_CLICKED);
+                        //  Log.d(TAG, "onAdClicked");
+                        sendSimpleMessage(MSG_INTERSTITIAL, EVENT_CLICKED);
                       }
                     });
                 }
@@ -479,10 +493,10 @@ public class AdmobJNI implements LifecycleObserver {
                 @Override
                 public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
                   // Handle the error
-                  Log.d(TAG, "onAdFailedToLoad: " + loadAdError.getMessage());
-                //    mInterstitialAd = null;
-                //    sendSimpleMessage(MSG_INTERSTITIAL, EVENT_FAILED_TO_LOAD, "code", loadAdError.getCode(),
-                        //   "error", String.format("Error domain: \"%s\". %s", loadAdError.getDomain(), loadAdError.getMessage()));
+                //   Log.d(TAG, "onAdFailedToLoad: " + loadAdError.getMessage());
+                   mInterstitialAd = null;
+                   sendSimpleMessage(MSG_INTERSTITIAL, EVENT_FAILED_TO_LOAD, "code", loadAdError.getCode(),
+                          "error", String.format("Error domain: \"%s\". %s", loadAdError.getDomain(), loadAdError.getMessage()));
                 }
             });
           }
