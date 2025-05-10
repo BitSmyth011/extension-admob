@@ -7,7 +7,3 @@ platforms:
             frameworks: ["UIKit", "AppTrackingTransparency", "AVFoundation"]
             weakFrameworks: ["JavaScriptCore", "AdSupport"]
             linkFlags: ["-ObjC"]
-
-    android:
-        android.java: src
-        android.res: res
