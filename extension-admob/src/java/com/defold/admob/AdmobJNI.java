@@ -440,7 +440,8 @@ public class AdmobJNI implements LifecycleObserver {
                         sendSimpleMessage(MSG_INTERSTITIAL, EVENT_CLOSED);
 
                         // Restore normal back key behavior
-                        activity.getWindow().getDecorView().setOnKeyListener(null);
+                        View decor = activity.getWindow().getDecorView();
+                        decor.setOnKeyListener(null);
                       }
 
                       @Override
@@ -457,15 +458,22 @@ public class AdmobJNI implements LifecycleObserver {
                         // Make sure to set your reference to null so you don't
                         // show it a second time.
                         // Log.d(TAG, "The ad was shown.");
-                        activity.getWindow().getDecorView().setOnKeyListener(new View.OnKeyListener() {
+                        View decor = activity.getWindow().getDecorView();
+                        decor.setFocusableInTouchMode(true);
+                        decor.requestFocus();
+                        decor.setOnKeyListener(new View.OnKeyListener() {
                             @Override
                             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                                return keyCode == KeyEvent.KEYCODE_BACK;
+                                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                                    // Block back button
+                                    return true;
+                                }
+                                return false;
                             }
                         });
 
                         mInterstitialAd = null;
-                        sendSimpleMessage(MSG_INTERSTITIAL, EVENT_OPENING);
+                        // sendSimpleMessage(MSG_INTERSTITIAL, EVENT_OPENING);
                       }
 
                       @Override

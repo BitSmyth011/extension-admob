@@ -6,4 +6,9 @@ platforms:
         context:
             frameworks: ["UIKit", "AppTrackingTransparency", "AVFoundation"]
             weakFrameworks: ["JavaScriptCore", "AdSupport"]
-            linkFlags:  ["-ObjC"]
+            linkFlags: ["-ObjC"]
+
+    android:
+        context:
+            android.java: src
+            android.res: res
