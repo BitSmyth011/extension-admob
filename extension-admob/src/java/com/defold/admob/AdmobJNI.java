@@ -126,7 +126,7 @@ public class AdmobJNI implements LifecycleObserver {
         decor.requestFocus();
         decor.setOnKeyListener(new View.OnKeyListener() {
             @Override
-            public boolean onKey(javax.swing.text.View v, int keyCode, KeyEvent event) {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
                 Log.d(TAG, "keyCode: " + keyCode +  " event: " + event);
                 // if (keyCode == KeyEvent.KEYCODE_BACK) {
                 //     // Block back button
