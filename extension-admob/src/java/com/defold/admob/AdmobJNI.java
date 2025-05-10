@@ -479,7 +479,7 @@ public class AdmobJNI implements LifecycleObserver {
                 @Override
                 public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
                   // Handle the error
-                  Log.d(TAG, "onAdFailedToLoad", loadAdError.getMessage());
+                  Log.d(TAG, "onAdFailedToLoad: " + loadAdError.getMessage());
                 //    mInterstitialAd = null;
                 //    sendSimpleMessage(MSG_INTERSTITIAL, EVENT_FAILED_TO_LOAD, "code", loadAdError.getCode(),
                         //   "error", String.format("Error domain: \"%s\". %s", loadAdError.getDomain(), loadAdError.getMessage()));
