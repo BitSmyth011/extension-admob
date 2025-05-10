@@ -9,6 +9,5 @@ platforms:
             linkFlags: ["-ObjC"]
 
     android:
-        context:
-            android.java: src
-            android.res: res
+        android.java: src
+        android.res: res
